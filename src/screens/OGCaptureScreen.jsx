@@ -1,6 +1,6 @@
 import React from 'react';
 import PixelBackground from '../components/PixelBackground';
-import og from '../assets/pictures/og.jpeg';
+import og from '../assets/pictures/og.webp';
 
 const OGCaptureScreen = () => {
   return (
@@ -17,6 +17,8 @@ const OGCaptureScreen = () => {
             src={og}
             alt="Lucky"
             className="w-full h-full object-cover object-center"
+            loading="eager"
+            fetchPriority="high"
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23ffeaf3'/%3E%3Ctext x='50' y='50' font-family='sans-serif' font-size='14' text-anchor='middle' alignment-baseline='middle' fill='%23d94f95'%3EImage Placement%3C/text%3E%3C/svg%3E";

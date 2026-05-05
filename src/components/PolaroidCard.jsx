@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const PolaroidCard = ({ src, caption, rotation = 0, onClick, interactive = false, className = "" }) => {
+const PolaroidCard = ({ src, caption, rotation = 0, onClick, interactive = false, priority = false, className = "" }) => {
   return (
     <motion.div
       whileHover={interactive ? { scale: 1.05, y: -10, rotate: 0, zIndex: 10 } : {}}
@@ -17,8 +17,9 @@ const PolaroidCard = ({ src, caption, rotation = 0, onClick, interactive = false
             src={src} 
             alt={caption || "Memory"} 
             className="w-full h-full object-cover"
-            loading="lazy"
-            decoding="async"
+            loading={priority ? "eager" : "lazy"}
+            fetchPriority={priority ? "high" : "auto"}
+            decoding={priority ? "auto" : "async"}
             onError={(e) => {
               e.target.onerror = null; 
               e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23ffeaf3'/%3E%3Ctext x='50' y='50' font-family='sans-serif' font-size='14' text-anchor='middle' alignment-baseline='middle' fill='%23d94f95'%3EMissing%3C/text%3E%3C/svg%3E";

@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import StepShell from '../components/StepShell';
 import PixelButton from '../components/PixelButton';
 import PolaroidCard from '../components/PolaroidCard';
-import step1 from '../assets/pictures/step1.jpeg';
+import step1 from '../assets/pictures/step1.webp';
 const options = [
   { id: 'cake', label: '🎂 Cake', isCorrect: false },
   { id: 'balloon', label: '🎈 Balloon', isCorrect: false },
@@ -89,6 +89,7 @@ const StepOneBirthdayGate = ({ onComplete }) => {
               src={step1}
               caption="Birthday Gate Approved"
               rotation={-3}
+              priority={true}
               className="w-64 md:w-80 mb-8"
             />
             <p className="font-['Jersey_25'] text-xl md:text-2xl text-[var(--text-dark)] leading-relaxed mb-8 max-w-lg">

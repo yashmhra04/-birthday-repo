@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import StepShell from '../components/StepShell';
 import PixelButton from '../components/PixelButton';
@@ -13,6 +13,7 @@ const initialPolaroids = stepTwoMemories.map(mem => ({
 const StepTwoMemoryCollect = ({ onComplete }) => {
   const [polaroids, setPolaroids] = useState(initialPolaroids);
   const [activeMessage, setActiveMessage] = useState('');
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleCollect = (id, message) => {
     setPolaroids(prev => prev.map(p => p.id === id ? { ...p, collected: true } : p));
@@ -21,12 +22,21 @@ const StepTwoMemoryCollect = ({ onComplete }) => {
 
   const allCollected = polaroids.every(p => p.collected);
 
+  useEffect(() => {
+    if (allCollected) {
+      const timer = setTimeout(() => {
+        setShowSuccess(true);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [allCollected]);
+
   return (
     <StepShell 
       title="Step 2: Collect the Memories" 
-      instruction={allCollected ? "" : "Click the floating polaroids and save them in the birthday box. Each one contains proof that you are unforgettable."}
+      instruction={showSuccess ? "" : "Click the floating polaroids and save them in the birthday box. Each one contains proof that you are unforgettable."}
     >
-      {!allCollected ? (
+      {!showSuccess ? (
         <div className="relative w-full h-[500px] md:h-[600px] flex flex-col items-center">
           {/* Box */}
           <div className="absolute bottom-0 flex flex-col items-center">
@@ -73,6 +83,7 @@ const StepTwoMemoryCollect = ({ onComplete }) => {
                   caption={p.caption} 
                   rotation={i * 7 - 14}
                   interactive={true}
+                  priority={true}
                   onClick={() => handleCollect(p.id, p.caption)}
                   className="w-48 md:w-64 transform-none"
                 />

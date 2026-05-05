@@ -1,9 +1,9 @@
-import memory1 from '../assets/pictures/memory1.jpeg';
-import memory2 from '../assets/pictures/memory2.jpeg';
-import memory3 from '../assets/pictures/memory3.jpeg';
-import memory4 from '../assets/pictures/memory4.jpeg';
-import memory5 from '../assets/pictures/memory5.jpeg';
-import memory6 from '../assets/pictures/memory6.jpeg';
+import memory1 from '../assets/pictures/memory1.webp';
+import memory2 from '../assets/pictures/memory2.webp';
+import memory3 from '../assets/pictures/memory3.webp';
+import memory4 from '../assets/pictures/memory4.webp';
+import memory5 from '../assets/pictures/memory5.webp';
+import memory6 from '../assets/pictures/memory6.webp';
 
 export const stepTwoMemories = [
   {

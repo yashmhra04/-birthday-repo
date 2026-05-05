@@ -1,9 +1,9 @@
-import final1 from '../assets/pictures/final1.jpeg';
-import final2 from '../assets/pictures/final2.jpeg';
-import final3 from '../assets/pictures/final3.jpeg';
-import final4 from '../assets/pictures/final4.jpeg';
-import final5 from '../assets/pictures/final5.jpeg';
-import final6 from '../assets/pictures/final6.jpeg';
+import final1 from '../assets/pictures/final1.webp';
+import final2 from '../assets/pictures/final2.webp';
+import final3 from '../assets/pictures/final3.webp';
+import final4 from '../assets/pictures/final4.webp';
+import final5 from '../assets/pictures/final5.webp';
+import final6 from '../assets/pictures/final6.webp';
 
 export const finalWishMemories = [
   {

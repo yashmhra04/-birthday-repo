@@ -56,6 +56,8 @@ const FloatingCornerObjects = () => {
             src={obj}
             alt=""
             aria-hidden="true"
+            loading="lazy"
+            decoding="async"
             initial={{ x: obj.startX, y: obj.startY, opacity: 0, scale: 0.5, rotate: 0 }}
             animate={{ 
               x: [obj.startX, obj.endX, obj.endX + (Math.random() * 50 - 25), obj.startX],

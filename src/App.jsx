@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import PixelBackground from './components/PixelBackground';
 import FloatingCornerObjects from './components/FloatingCornerObjects';
@@ -10,6 +10,12 @@ import StepTwoMemoryCollect from './screens/StepTwoMemoryCollect';
 import StepThreeGiftReveal from './screens/StepThreeGiftReveal';
 import FinalWishScreen from './screens/FinalWishScreen';
 import OGCaptureScreen from './screens/OGCaptureScreen';
+import { preloadImages } from './utils/preload';
+import { floatingObjects } from './data/floatingObjects';
+import { stepTwoMemories } from './data/stepTwoMemories';
+import { finalWishMemories } from './data/finalWishMemories';
+import step1 from './assets/pictures/step1.webp';
+import og from './assets/pictures/og.webp';
 
 const SCREENS = {
   LOADING: 'loading',
@@ -34,6 +40,18 @@ const getProgress = (screen) => {
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState(SCREENS.LOADING);
+
+  useEffect(() => {
+    // Passively preload all images so they are in browser cache
+    const allImages = [
+      step1,
+      og,
+      ...floatingObjects,
+      ...stepTwoMemories.map(m => m.src),
+      ...finalWishMemories.map(m => m.src)
+    ];
+    preloadImages(allImages).catch(() => {}); // ignore preload errors
+  }, []);
 
   const handleLoadingComplete = () => setCurrentScreen(SCREENS.ENTRY);
   const handleEntryComplete = () => setCurrentScreen(SCREENS.STEP1);

@@ -67,6 +67,7 @@ const FinalWishScreen = ({ onReplay }) => {
               <PolaroidCard 
                 src={mem.src} 
                 caption={mem.caption} 
+                priority={true}
                 className="w-64 md:w-80"
               />
             </motion.div>
