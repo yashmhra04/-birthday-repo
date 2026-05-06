@@ -9,6 +9,7 @@ import EntryScreen from './screens/EntryScreen';
 import StepOneBirthdayGate from './screens/StepOneBirthdayGate';
 import StepTwoMemoryCollect from './screens/StepTwoMemoryCollect';
 import StepThreeGiftReveal from './screens/StepThreeGiftReveal';
+import StepFeedDog from './screens/StepFeedDog';
 import FinalWishScreen from './screens/FinalWishScreen';
 import OGCaptureScreen from './screens/OGCaptureScreen';
 import { preloadImages } from './utils/preload';
@@ -17,12 +18,14 @@ import { stepTwoMemories } from './data/stepTwoMemories';
 import { finalWishMemories } from './data/finalWishMemories';
 import step1 from './assets/pictures/step1.webp';
 import og from './assets/pictures/og.webp';
+import dobermanImg from './assets/pictures/doberman.png';
 
 const SCREENS = {
   LOADING: 'loading',
   ENTRY: 'entry',
   STEP1: 'step-1',
   STEP2: 'step-2',
+  STEP_DOG: 'step-dog',
   STEP3: 'step-3',
   FINAL: 'final'
 };
@@ -32,8 +35,9 @@ const getProgress = (screen) => {
     case SCREENS.LOADING: return 0;
     case SCREENS.ENTRY: return 0;
     case SCREENS.STEP1: return 0;
-    case SCREENS.STEP2: return 33;
-    case SCREENS.STEP3: return 66;
+    case SCREENS.STEP2: return 25;
+    case SCREENS.STEP_DOG: return 50;
+    case SCREENS.STEP3: return 75;
     case SCREENS.FINAL: return 100;
     default: return 0;
   }
@@ -56,7 +60,8 @@ function App() {
       og,
       ...floatingObjects,
       ...stepTwoMemories.map(m => m.src),
-      ...finalWishMemories.map(m => m.src)
+      ...finalWishMemories.map(m => m.src),
+      dobermanImg
     ];
     preloadImages(allImages).catch(() => {}); // ignore preload errors
   }, []);
@@ -64,7 +69,8 @@ function App() {
   const handleLoadingComplete = () => setCurrentScreen(SCREENS.ENTRY);
   const handleEntryComplete = () => setCurrentScreen(SCREENS.STEP1);
   const handleStep1Complete = () => setCurrentScreen(SCREENS.STEP2);
-  const handleStep2Complete = () => setCurrentScreen(SCREENS.STEP3);
+  const handleStep2Complete = () => setCurrentScreen(SCREENS.STEP_DOG);
+  const handleStepDogComplete = () => setCurrentScreen(SCREENS.STEP3);
   const handleStep3Complete = () => setCurrentScreen(SCREENS.FINAL);
   const handleReplay = () => setCurrentScreen(SCREENS.ENTRY);
 
@@ -122,6 +128,10 @@ function App() {
 
               {currentScreen === SCREENS.STEP2 && (
                 <StepTwoMemoryCollect key="step2" onComplete={handleStep2Complete} />
+              )}
+
+              {currentScreen === SCREENS.STEP_DOG && (
+                <StepFeedDog key="stepdog" onComplete={handleStepDogComplete} />
               )}
 
               {currentScreen === SCREENS.STEP3 && (

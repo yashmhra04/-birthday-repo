@@ -131,7 +131,7 @@ const StepTwoMemoryCollect = ({ onComplete }) => {
           </div>
 
           <PixelButton onClick={onComplete}>
-            Open the Final Task
+            Go to next surprise
           </PixelButton>
         </motion.div>
       )}

@@ -23,7 +23,7 @@ const StepThreeGiftReveal = ({ onComplete }) => {
 
   return (
     <StepShell 
-      title="Step 3: Open the Final Surprise" 
+      title="Step 4: Open the Final Surprise" 
       instruction={taps < maxTaps ? "Tap the gift box until it gives up and reveals your surprise." : ""}
     >
       <div className="flex flex-col items-center justify-center min-h-[300px]">
