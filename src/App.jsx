@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import PixelBackground from './components/PixelBackground';
+import PixelIconScatter from './components/PixelIconScatter';
 import FloatingCornerObjects from './components/FloatingCornerObjects';
 import QuestProgressBar from './components/QuestProgressBar';
 import PixelLoadingScreen from './components/PixelLoadingScreen';
@@ -40,6 +41,13 @@ const getProgress = (screen) => {
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState(SCREENS.LOADING);
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = 0;
+    }
+  }, [currentScreen]);
 
   useEffect(() => {
     // Passively preload all images so they are in browser cache
@@ -67,42 +75,64 @@ function App() {
   const showProgress = currentScreen !== SCREENS.LOADING && currentScreen !== SCREENS.FINAL;
 
   return (
-    <div className="relative w-full min-h-screen flex flex-col">
+    <div className="relative w-full h-screen flex flex-col overflow-hidden">
       <PixelBackground />
-      
-      <div className="flex flex-col min-h-screen w-full items-center z-10">
+      <PixelIconScatter />
+
+      <div className="flex flex-col h-screen w-full items-center z-10 relative">
         {showProgress && (
-          <div className="w-full flex justify-center pt-8 pb-4 shrink-0">
+          <div
+            className="w-full flex justify-center pt-8 pb-10 shrink-0 z-20"
+            style={{
+              background:
+                'linear-gradient(to bottom, var(--pink-bg) 0%, rgba(255, 214, 232, 0.95) 45%, rgba(255, 214, 232, 0.6) 75%, rgba(255, 214, 232, 0) 100%)'
+            }}
+          >
             <QuestProgressBar progress={getProgress(currentScreen)} />
           </div>
         )}
 
-        <div className="flex-1 w-full flex flex-col items-center justify-center py-8 px-4">
-          <AnimatePresence mode="wait">
-            {currentScreen === SCREENS.LOADING && (
-              <PixelLoadingScreen key="loading" onComplete={handleLoadingComplete} />
-            )}
-            
-            {currentScreen === SCREENS.ENTRY && (
-              <EntryScreen key="entry" onStart={handleEntryComplete} />
-            )}
-            
-            {currentScreen === SCREENS.STEP1 && (
-              <StepOneBirthdayGate key="step1" onComplete={handleStep1Complete} />
-            )}
-            
-            {currentScreen === SCREENS.STEP2 && (
-              <StepTwoMemoryCollect key="step2" onComplete={handleStep2Complete} />
-            )}
-            
-            {currentScreen === SCREENS.STEP3 && (
-              <StepThreeGiftReveal key="step3" onComplete={handleStep3Complete} />
-            )}
-            
-            {currentScreen === SCREENS.FINAL && (
-              <FinalWishScreen key="final" onReplay={handleReplay} />
-            )}
-          </AnimatePresence>
+        <div
+          ref={scrollRef}
+          className="flex-1 w-full overflow-y-auto"
+          style={
+            showProgress
+              ? {
+                  WebkitMaskImage:
+                    'linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.4) 24px, black 64px, black 100%)',
+                  maskImage:
+                    'linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.4) 24px, black 64px, black 100%)'
+                }
+              : undefined
+          }
+        >
+          <div className="w-full min-h-full flex flex-col items-center justify-center py-8 px-4">
+            <AnimatePresence mode="wait">
+              {currentScreen === SCREENS.LOADING && (
+                <PixelLoadingScreen key="loading" onComplete={handleLoadingComplete} />
+              )}
+
+              {currentScreen === SCREENS.ENTRY && (
+                <EntryScreen key="entry" onStart={handleEntryComplete} />
+              )}
+
+              {currentScreen === SCREENS.STEP1 && (
+                <StepOneBirthdayGate key="step1" onComplete={handleStep1Complete} />
+              )}
+
+              {currentScreen === SCREENS.STEP2 && (
+                <StepTwoMemoryCollect key="step2" onComplete={handleStep2Complete} />
+              )}
+
+              {currentScreen === SCREENS.STEP3 && (
+                <StepThreeGiftReveal key="step3" onComplete={handleStep3Complete} />
+              )}
+
+              {currentScreen === SCREENS.FINAL && (
+                <FinalWishScreen key="final" onReplay={handleReplay} />
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </div>
